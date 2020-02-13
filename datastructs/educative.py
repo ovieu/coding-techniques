@@ -1,5 +1,6 @@
 import random
 import math
+import sys
 
 def find_averages_of_subarrays(k, arr):
     # use the sliding window method -> windowSum, windowStart, result
@@ -72,37 +73,40 @@ def longestSubstringKDistinct(k, str):
         maxLen = max(maxLen, windowEnd - windowStart + 1)
     return maxLen
 
-def main():
-    # k = 6
-    # arr = [1, 3, 2, 6, -1, 4, 1, 8, 2]
-    # result = find_averages_of_subarrays(k, arr)
-    # print(f'Averages of subarrays of size {k} is {result}')
-
-
-    arr =  [2, 1, 5, 1, 3, 2]
-    k = 3
-    print(maxSubArraySize(k, arr))
-   
-    print()
-    arr = [2, 3, 4, 1, 5]
-    k = 2
-    print(maxSubArraySize(k, arr))
-
-
-    print()
-    arr = [2, 1, 5, 2, 3, 2]
-    s = 7
-    print(smallestSubArrayLen(s, arr))
-
-    print()
-    arr =  [2, 1, 5, 2, 8]
-    s = 7
-    print(smallestSubArrayLen(s, arr))
+def maxFruitsInBasket(arr):
+    #setup sliding window
+    # stat moving the right end of the window
+    window_start, maxLen = 0, -sys.maxsize + 1
+    fruit_frequency = {}
     
-    print()
-    arr =  "arraci"
-    s = 2
-    print(longestSubstringKDistinct(s, arr))
+    for window_end in range(len(arr)):
+       # update the unique fruit counter
+        right_fruit = arr[window_end]
+        if right_fruit not in fruit_frequency:
+            fruit_frequency[right_fruit] = 0
+        fruit_frequency[right_fruit] += 1
+        
+        while len(fruit_frequency) > 2:
+            left_fruit = arr[window_start]
+            fruit_frequency[left_fruit] -= 1
+            if fruit_frequency[left_fruit] == 0:
+                del fruit_frequency[left_fruit]
+            window_start += 1
+            
+        maxLen = max(maxLen, window_end - window_start + 1)
+    return maxLen
+        
+    # check if new window exceeds 2 unique fruits
+        # if exceeds, remove the firts till only 2 fruits
+    #  update the maxlength of the tree
+    
+    pass
+
+def main():
+    fruits = ['A', 'B', 'C', 'A', 'C']
+    fruits2 = ['A', 'B', 'C', 'B','B', 'C']
+    print(maxFruitsInBasket(fruits))
+    print(maxFruitsInBasket(fruits2))
 
 if __name__ == "__main__":
     main()
