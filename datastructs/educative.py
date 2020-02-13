@@ -49,7 +49,29 @@ def smallestSubArrayLen(s, arr):
         # remove the left end element
         # shift the left end
     return minSubArrLen
-   
+  
+def longestSubstringKDistinct(k, str):
+    #use sliding window,
+    #setup sliding window var -> left_char, unique_char-dict, right_char,  maxlen
+    maxLen = - math.inf + 1
+    windowStart = 0
+    char_frequency = dict()
+    
+    for windowEnd in range(len(str)):
+        right_char = str[windowEnd]
+        if right_char not in char_frequency:
+            char_frequency[right_char] = 0
+        char_frequency[right_char] += 1
+        
+        while len(char_frequency) > k:
+            left_char = str[windowStart]
+            char_frequency[left_char] -= 1
+            if char_frequency[left_char] == 0:
+                del char_frequency[left_char]
+            windowStart += 1
+        maxLen = max(maxLen, windowEnd - windowStart + 1)
+    return maxLen
+
 def main():
     # k = 6
     # arr = [1, 3, 2, 6, -1, 4, 1, 8, 2]
@@ -76,6 +98,11 @@ def main():
     arr =  [2, 1, 5, 2, 8]
     s = 7
     print(smallestSubArrayLen(s, arr))
+    
+    print()
+    arr =  "arraci"
+    s = 2
+    print(longestSubstringKDistinct(s, arr))
 
 if __name__ == "__main__":
     main()
