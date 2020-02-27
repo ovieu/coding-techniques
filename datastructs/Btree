@@ -1,0 +1,149 @@
+import random
+class LNode:
+    def __init__(self, value=0):
+        self.value = value
+        self.next = None
+        self.prev = None
+        
+        
+class LList:
+    def __init__(self):
+        self.senFirst = LNode()
+        self.senLast = LNode()
+        self.senFirst.next = self.senLast
+        self.senFirst.prev = self.senLast.next = None
+        self.senLast.prev = self.senFirst
+        self.size = 0
+        
+    def size(self):
+        return self.size
+    
+    def add_last(self, value):
+        new_node = LNode(value)
+        new_node.next = self.senLast
+        new_node.prev = self.senLast.prev
+        new_node.next.prev = new_node
+        new_node.prev.next = new_node
+        
+    def add_first(self, value):
+        new_node = LNode(value)
+        new_node.next = self.senFirst.next
+        new_node.prev = self.senFirst
+        new_node.next.prev = new_node
+        new_node.prev.next = new_node
+        
+    def pop_first(self):
+        if self.isEmpty():
+            return
+        else:
+            return_node = self.senFirst.next
+            self.senFirst.next = return_node.next
+            return_node.prev = self.senFirst
+            return return_node
+        
+    def pop_last(self):
+        pass
+    
+    def print_Rec(self, head_node):
+        while (head_node != self.senLast):
+            print(f'{head_node.value} -> ', end=" ")
+            head_node = head_node.next
+        print('empty')
+    def print(self):
+        self.print_Rec(self.senFirst)
+        
+    def isEmpty(self):
+        return self.senFirst == self.senLast
+    
+
+class BTreeNode:
+    def __init__(self, value, left, right):
+        self.value = value
+        self.right = right
+        self.left = left
+
+
+class BTree:
+    def __init__(self):
+        self.root = None
+        self.size = 0
+    
+    def addRec(self, m_value, m_root):
+        if m_root is None:
+            m_root = BTreeNode(m_value, None, None)
+        elif m_value < m_root.value:
+            m_root.left = self.addRec(m_value, m_root.left)
+        else:
+            m_root.right = self.addRec(m_value, m_root.right)
+        return m_root
+
+    
+    def add(self, value):
+        self.root = self.addRec(value, self.root)
+        self.size += 1
+    
+    def printRec(self, m_root):
+        if m_root is None:
+            print("Empty")
+        else:
+            self.printRec(m_root.left)
+            print(m_root.value)
+            self.printRec(m_root.right)
+    
+    def print(self):
+        self.printRec(self.root)
+    
+    def size(self):
+        return self.size()
+
+class MyTrieNode:
+    def __init__(self, is_word=False, children={}):
+        self._is_word = is_word
+        self._children = children
+        
+    def set_is_word(self, _is_word):
+        self._is_word = _is_word
+        
+    def set_child(self, name):
+        pass
+    
+class MyTrie:
+    def __init__(self):
+        self.root = MyTrieNode()
+      
+    def addRec(self, str: str, _trie_root: MyTrieNode):
+        # get add recursive
+        # add all the characters recursively, then mark
+        # char as a word
+        if str == "":
+            _trie_root._is
+            
+        pass
+    
+    def add(self, str):
+        self.root = self.addRec(str, self.root)
+    
+    def contains(self, str):
+        pass
+    
+    def remove(self, str):
+        pass
+    
+def main():
+    # print("printing tree")
+    # tree = BTree()
+    # nums = [5, 3, 7, 2, 4, 6, 8]
+    # for num in nums:
+    #     tree.add(num)
+    # tree.print()
+    #
+    # print()
+    # print("printing list")
+    # list = LList()
+    # for num in range(10):
+    #     list.add_last(num)
+    # list.print()
+    print("printing trie")
+
+if __name__ == "__main__":
+    main()
